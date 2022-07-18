@@ -1,5 +1,6 @@
 const COLORS = {
   primary: '#3EB489',
+  buttonPrimary: '#7CC1A8',
   white: '#FFFFFF',
   black: '#000000',
   grey: '#808080',
@@ -10,6 +11,7 @@ const COLORS = {
   commonText: '#666666',
   green: '#0D8F39',
   red: '#F50F0F',
+  redButton: '#F75959',
   textColor: '#494949',
   linkText: '#4280EF',
   commongrey: '#8E8E8E',

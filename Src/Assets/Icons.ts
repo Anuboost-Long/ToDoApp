@@ -7,7 +7,9 @@ import Plus from './Icons/Plus.svg';
 import Info from './Icons/Info.svg';
 import MenuWhite from './Icons/MenuWhite.svg';
 import CloseWhite from './Icons/CloseWhite.svg';
-
+import LightBulb from './Icons/LightBulb.svg';
+import InfoWhite from './Icons/InfoWhite.svg';
+import Tick from './Icons/Tick.svg';
 const IconAssets = {
   Home,
   Setting,
@@ -18,5 +20,8 @@ const IconAssets = {
   Info,
   MenuWhite,
   CloseWhite,
+  LightBulb,
+  InfoWhite,
+  Tick,
 };
 export default IconAssets;

@@ -1,20 +1,15 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useRef, useState} from 'react';
-import COLORS from '../../Constants/colors';
 import {moderateScale} from 'react-native-size-matters';
 import {DEVICE} from '../../Calibration/Device';
-import FONTS_SIZE from '../../Constants/fontSize';
-import FONTS from '../../Constants/fonts';
+
 import SizedBox from '../../Components/SizedBox';
 import IconAssets from '../../Assets/Icons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Transition, Transitioning} from 'react-native-reanimated';
+import EachTasks from './components/EachTasks';
+import {useEffect} from 'react';
+import {styles} from './style/styles';
 
 const transition = (
   <Transition.Together>
@@ -25,32 +20,48 @@ const transition = (
 );
 
 export default function HomeScreen() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const ref = useRef(null);
   const todos = [
-    {title: 'Code', id: 1, status: 'Not Completed'},
-    {title: 'Game', id: 2, status: 'Not Completed'},
-    {title: 'Think About Life', id: 3, status: 'Not Completed'},
-    {title: 'Kill Someone', id: 4, status: 'Not Completed'},
-    {title: 'One Eye Snake', id: 5, status: 'Not Completed'},
-    {title: 'Code', id: 6, status: 'Not Completed'},
-    {title: 'Game', id: 7, status: 'Not Completed'},
-    {title: 'Think About Life', id: 8, status: 'Not Completed'},
-    {title: 'Kill Someone', id: 9, status: 'Not Completed'},
-    {title: 'One Eye Snake', id: 10, status: 'Not Completed'},
+    {
+      title: 'Code',
+      id: 1,
+      status: 'Completed',
+      description:
+        'Never gonna give you up Never gonna let you down Never gonna run around and desert you Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you',
+    },
+    {title: 'Game', id: 2, status: 'Completed', description: ''},
+    {
+      title: 'Think About Life',
+      id: 3,
+      status: 'Not Completed',
+      description: '',
+    },
+    {title: 'Kill Someone', id: 4, status: 'Not Completed', description: ''},
+    {title: 'One Eye Snake', id: 5, status: 'Not Completed', description: ''},
+    {title: 'Depression', id: 6, status: 'Not Completed', description: ''},
+    {title: 'Horny', id: 7, status: 'Not Completed', description: ''},
+    {title: 'Jam koy', id: 8, status: 'Not Completed', description: ''},
+    {title: 'Shower', id: 9, status: 'Not Completed', description: ''},
+    {title: 'Fap and dek', id: 10, status: 'Not Completed', description: ''},
   ];
 
   const renderTasks = ({item}) => {
     return (
       <>
         <SizedBox height={moderateScale(10)} />
-        <TouchableOpacity activeOpacity={0.8} style={styles.todoContainer}>
-          <Text style={styles.todoText}>{item.title}</Text>
-        </TouchableOpacity>
+        <EachTasks item={item} />
         <SizedBox height={moderateScale(10)} />
       </>
     );
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current.animateNextTransition();
+      setShow(true);
+    }, 200);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -111,7 +122,7 @@ export default function HomeScreen() {
                 height:
                   todos.length > 9
                     ? moderateScale(DEVICE.DEVICE_Height / 2.4)
-                    : moderateScale(DEVICE.DEVICE_Height / (9 - todos.length)),
+                    : moderateScale(DEVICE.DEVICE_Height / (8 - todos.length)),
               }}>
               <SizedBox height={moderateScale(10)} />
               <FlatList
@@ -127,124 +138,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-  },
-  content: {
-    flex: 1,
-    marginTop: moderateScale(10),
-    alignItems: 'center',
-  },
-  WelcomeHolder: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: moderateScale(DEVICE.DEVICE_Width / 1.1),
-    height: moderateScale(DEVICE.DEVICE_Height / 7),
-    backgroundColor: COLORS.primary,
-    padding: moderateScale(10),
-    borderRadius: moderateScale(5),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-  },
-  WelcomeText: {
-    fontSize: FONTS_SIZE.font18,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-  },
-  NormalText: {
-    fontSize: FONTS_SIZE.font16,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-  },
-  dashboard: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    width: moderateScale(DEVICE.DEVICE_Width / 1.1),
-    shadowColor: '#000',
-  },
-  stats: {
-    borderRadius: moderateScale(5),
-    width: '32%',
-    height: moderateScale(DEVICE.DEVICE_Height / 10),
-    backgroundColor: COLORS.primary,
-    padding: moderateScale(10),
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-  },
-  StatsTitle: {
-    fontSize: FONTS_SIZE.font14,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-  },
-  StatsValue: {
-    fontSize: FONTS_SIZE.font20,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-  },
-
-  TodayTask: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    width: moderateScale(DEVICE.DEVICE_Width / 1.1),
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: moderateScale(10),
-    paddingVertical: moderateScale(15),
-    borderRadius: moderateScale(5),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-  },
-  rowView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    alignItems: 'center',
-  },
-  TitleText: {
-    fontSize: FONTS_SIZE.font16,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-    fontWeight: 'bold',
-    letterSpacing: moderateScale(1),
-  },
-  todoText: {
-    fontSize: FONTS_SIZE.font14,
-    color: COLORS.white,
-    fontFamily: FONTS.REGULAR,
-  },
-  todoContainer: {
-    flexDirection: 'row',
-    borderRadius: moderateScale(5),
-    backgroundColor: COLORS.primary,
-    width: moderateScale(DEVICE.DEVICE_Width / 1.1),
-    paddingHorizontal: moderateScale(10),
-    paddingVertical: moderateScale(15),
-  },
-});

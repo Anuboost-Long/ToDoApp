@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import COLORS from '../Constants/colors';
+import FONTS from '../Constants/fonts';
 
 interface TabItemParams {
   label: string;
@@ -16,6 +17,7 @@ const CustomTabItem = ({label, focused, icon}: TabItemParams) => {
         numberOfLines={1}
         style={{
           color: focused ? COLORS.primary : COLORS.grey,
+          fontFamily: FONTS.REGULAR,
         }}>
         {label}
       </Text>

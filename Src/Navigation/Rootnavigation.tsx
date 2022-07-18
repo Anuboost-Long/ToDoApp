@@ -6,6 +6,7 @@ import {moderateScale} from 'react-native-size-matters';
 import COLORS from '../Constants/colors';
 import SCREEN_CONSTANT from '../Constants/SCREEN_CONSTANT';
 import TabsNavigation from './TabsNavigation';
+import FONTS from '../Constants/fonts';
 
 const stack = createStackNavigator();
 
@@ -17,7 +18,7 @@ export default function Rootnavigation() {
         screenOptions={{
           gestureEnabled: false,
           headerTitleAlign: 'center',
-          headerTitleStyle: {color: COLORS.white},
+          headerTitleStyle: {color: COLORS.white, fontFamily: FONTS.REGULAR},
           headerStyle: {
             backgroundColor: COLORS.primary,
             borderBottomColor: COLORS.grey,
