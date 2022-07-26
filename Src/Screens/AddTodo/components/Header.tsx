@@ -1,4 +1,5 @@
 import {
+  GestureResponderEvent,
   StyleSheet,
   Text,
   TextInput,
@@ -17,8 +18,22 @@ import FONTS from '../../../Constants/fonts';
 import FONTS_SIZE from '../../../Constants/fontSize';
 import {useState} from 'react';
 
-export default function Header() {
-  const [selectAll, setSelectAll] = useState(false);
+interface headerprops {
+  handleAddTask: (event: GestureResponderEvent) => string;
+  handleClearTask: (event: GestureResponderEvent) => void;
+  selectAll: boolean;
+  setSelectAll: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Header({
+  handleAddTask,
+  handleClearTask,
+  setSelectAll,
+  selectAll,
+}: headerprops) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
   return (
     <>
       <View style={styles.iconHolder}>
@@ -35,17 +50,42 @@ export default function Header() {
         <View style={styles.inputHolder}>
           <Text style={styles.title}>Task Name</Text>
           <SizedBox height={moderateScale(10)} />
-          <TextInput style={styles.input} placeholder="Task Name" />
+          <TextInput
+            onChangeText={value => setName(value)}
+            value={name}
+            style={styles.input}
+            placeholder="Task Name"
+            placeholderTextColor={COLORS.lightGrey}
+          />
           <SizedBox height={moderateScale(10)} />
           <Text style={styles.title}>Task Description</Text>
           <SizedBox height={moderateScale(10)} />
-          <AutoGrowingTextInput style={styles.input} />
+          <AutoGrowingTextInput
+            onChangeText={value => setDescription(value)}
+            value={description}
+            style={styles.input}
+            placeholderTextColor={COLORS.lightGrey}
+            placeholder="Task Description"
+          />
           <SizedBox height={moderateScale(10)} />
           <View style={styles.ButtonContainer}>
-            <TouchableOpacity style={styles.giveup}>
+            <TouchableOpacity
+              style={styles.giveup}
+              onPress={() => {
+                setName('');
+                setDescription('');
+                handleClearTask(name);
+              }}>
               <Text style={styles.headerText}>Clear</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.complete}>
+            <TouchableOpacity
+              disabled={name.length >= 5 ? false : true}
+              style={styles.complete}
+              onPress={() => {
+                handleAddTask(name, description);
+                setName('');
+                setDescription('');
+              }}>
               <Text style={styles.headerText}>Add Task</Text>
             </TouchableOpacity>
           </View>
@@ -71,6 +111,7 @@ export default function Header() {
           <Text style={styles.title}>Select All</Text>
         </TouchableOpacity>
       </View>
+      <SizedBox height={moderateScale(15)} />
     </>
   );
 }
@@ -78,6 +119,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   iconHolder: {
     alignSelf: 'center',
+    marginTop: moderateScale(10),
     width: moderateScale(100),
     height: moderateScale(100),
     alignItems: 'center',
@@ -169,6 +211,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rowView: {
+    paddingHorizontal: moderateScale(10),
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',

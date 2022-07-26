@@ -10,6 +10,8 @@ import CloseWhite from './Icons/CloseWhite.svg';
 import LightBulb from './Icons/LightBulb.svg';
 import InfoWhite from './Icons/InfoWhite.svg';
 import Tick from './Icons/Tick.svg';
+import TrashCan from './Icons/TrashCan.svg';
+import Select from './Icons/Select.svg';
 const IconAssets = {
   Home,
   Setting,
@@ -23,5 +25,7 @@ const IconAssets = {
   LightBulb,
   InfoWhite,
   Tick,
+  TrashCan,
+  Select,
 };
 export default IconAssets;
