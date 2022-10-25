@@ -8,6 +8,7 @@ import FONTS_SIZE from '../../Constants/fontSize';
 import Header from './components/Header';
 import uuid from 'react-native-uuid';
 import TodoCards from './components/TodoCards';
+import {getTodo, saveTodo} from '../../Utils/AsyncHelper';
 
 export interface todo {
   name: string;
@@ -21,8 +22,14 @@ interface todoHolder {
 }
 
 export default function AddTodo() {
+  const [oldTodo, setOldTodo] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [tasks, setTask]: todo = useState([]);
+
+  React.useEffect(async () => {
+    const todo = await getTodo();
+    setOldTodo(JSON.parse(todo));
+  }, []);
 
   const handleAddTodos = (name: string, description: string) => {
     const todo: todo = {
@@ -58,7 +65,11 @@ export default function AddTodo() {
   const handleSave = () => {
     const newtodo = tasks.filter(item => item.selected != true);
     const selectedTodo = tasks.filter(item => item.selected == true);
-    console.log(selectedTodo);
+    let savedTodo = oldTodo;
+    for (let i = 0; i < selectedTodo.length; i++) {
+      savedTodo = [...savedTodo, selectedTodo[i]];
+    }
+    saveTodo(savedTodo);
     setTask(newtodo);
     setSelectAll(false);
   };

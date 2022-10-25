@@ -7,8 +7,9 @@ import FONTS_SIZE from '../../../Constants/fontSize';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: DEVICE.DEVICE_Height,
     backgroundColor: COLORS.white,
+    marginTop: moderateScale(-5),
   },
   content: {
     flex: 1,

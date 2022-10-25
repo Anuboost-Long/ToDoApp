@@ -1,5 +1,5 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {DEVICE} from '../../Calibration/Device';
 
@@ -8,9 +8,11 @@ import IconAssets from '../../Assets/Icons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Transition, Transitioning} from 'react-native-reanimated';
 import EachTasks from './components/EachTasks';
-import {useEffect} from 'react';
 import {styles} from './style/styles';
-
+import {getTodo, showLog} from '../../Utils/AsyncHelper';
+import {connect} from 'react-redux';
+import {fetchToDo} from '../../Redux/todos/actions';
+import LoadingModal from '../../Components/loadingModal';
 const transition = (
   <Transition.Together>
     <Transition.In type="slide-right" durationMs={200} />
@@ -19,32 +21,15 @@ const transition = (
   </Transition.Together>
 );
 
-export default function HomeScreen() {
+const HomeScreen = (props: any) => {
+  showLog(props.data);
   const [show, setShow] = useState(false);
   const ref = useRef(null);
-  const todos = [
-    {
-      title: 'Code',
-      id: 1,
-      status: 'Completed',
-      description:
-        'Never gonna give you up Never gonna let you down Never gonna run around and desert you Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you',
-    },
-    {title: 'Game', id: 2, status: 'Completed', description: ''},
-    {
-      title: 'Think About Life',
-      id: 3,
-      status: 'Not Completed',
-      description: '',
-    },
-    {title: 'Kill Someone', id: 4, status: 'Not Completed', description: ''},
-    {title: 'One Eye Snake', id: 5, status: 'Not Completed', description: ''},
-    {title: 'Depression', id: 6, status: 'Not Completed', description: ''},
-    {title: 'Horny', id: 7, status: 'Not Completed', description: ''},
-    {title: 'Jam koy', id: 8, status: 'Not Completed', description: ''},
-    {title: 'Shower', id: 9, status: 'Not Completed', description: ''},
-    {title: 'Fap and dek', id: 10, status: 'Not Completed', description: ''},
-  ];
+  const [reload, setReload] = useState(true);
+
+  useEffect(() => {
+    props.fetchToDo();
+  }, []);
 
   const renderTasks = ({item}) => {
     return (
@@ -65,6 +50,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <LoadingModal visible={props.loading} />
       <View style={styles.content}>
         {/* this is my welcome Holder  */}
         <View style={styles.WelcomeHolder}>
@@ -120,15 +106,15 @@ export default function HomeScreen() {
             <View
               style={{
                 height:
-                  todos.length > 9
+                  props.data.length > 9
                     ? moderateScale(DEVICE.DEVICE_Height / 2.4)
-                    : moderateScale(DEVICE.DEVICE_Height / (8 - todos.length)),
+                    : moderateScale(DEVICE.DEVICE_Height / 2.4),
               }}>
               <SizedBox height={moderateScale(10)} />
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={todos}
-                keyExtractor={item => item.id.toString()}
+                data={props.data}
+                keyExtractor={item => item.id}
                 renderItem={renderTasks}
               />
             </View>
@@ -137,4 +123,15 @@ export default function HomeScreen() {
       </View>
     </View>
   );
-}
+};
+
+const mapStateToProps = (state: any) => {
+  const {data, loading} = state.TODO;
+  return {data, loading};
+};
+
+const mapDispatchtoProps = {
+  fetchToDo,
+};
+
+export default connect(mapStateToProps, mapDispatchtoProps)(HomeScreen);

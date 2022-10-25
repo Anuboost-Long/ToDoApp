@@ -8,9 +8,10 @@ import {DEVICE} from '../../../Calibration/Device';
 import IconAssets from '../../../Assets/Icons';
 import {useState} from 'react';
 import TaskDetail from '../../../Components/Modals/TaskDetail';
+import {showLog} from '../../../Utils/AsyncHelper';
 
 export interface data {
-  title: string;
+  name: string;
   status: string;
   id: number;
   description: string;
@@ -21,6 +22,7 @@ interface TaskProps {
 }
 
 export default function EachTasks({item}: TaskProps) {
+  showLog(item);
   const [visible, setVisible] = useState(false);
   return (
     <>
@@ -28,7 +30,7 @@ export default function EachTasks({item}: TaskProps) {
         activeOpacity={0.8}
         style={styles.todoContainer}
         onPress={() => setVisible(true)}>
-        <Text style={styles.todoText}>{item.title}</Text>
+        <Text style={styles.todoText}>{item.name}</Text>
         <IconAssets.InfoWhite
           width={moderateScale(25)}
           height={moderateScale(25)}

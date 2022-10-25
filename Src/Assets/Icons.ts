@@ -12,6 +12,7 @@ import InfoWhite from './Icons/InfoWhite.svg';
 import Tick from './Icons/Tick.svg';
 import TrashCan from './Icons/TrashCan.svg';
 import Select from './Icons/Select.svg';
+import Box from './Icons/Box.svg';
 const IconAssets = {
   Home,
   Setting,
@@ -27,5 +28,6 @@ const IconAssets = {
   Tick,
   TrashCan,
   Select,
+  Box,
 };
 export default IconAssets;

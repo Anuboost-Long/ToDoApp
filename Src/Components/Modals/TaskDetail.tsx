@@ -46,7 +46,7 @@ export default function TaskDetail({
             <View style={styles.rowView}>
               <View style={styles.innerRowLeft}>
                 <Text style={styles.titleText}>Task Name: </Text>
-                <Text style={styles.TaskName}>{value.title}</Text>
+                <Text style={styles.TaskName}>{value.name}</Text>
               </View>
               <View style={styles.innerRowRight}>
                 <Text style={styles.titleText}>Status: </Text>
