@@ -22,7 +22,6 @@ interface TaskProps {
 }
 
 export default function EachTasks({item}: TaskProps) {
-  showLog(item);
   const [visible, setVisible] = useState(false);
   return (
     <>

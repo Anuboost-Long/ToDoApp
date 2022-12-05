@@ -9,7 +9,6 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Transition, Transitioning} from 'react-native-reanimated';
 import EachTasks from './components/EachTasks';
 import {styles} from './style/styles';
-import {getTodo, showLog} from '../../Utils/AsyncHelper';
 import {connect} from 'react-redux';
 import {fetchToDo} from '../../Redux/todos/actions';
 import LoadingModal from '../../Components/loadingModal';
@@ -22,7 +21,6 @@ const transition = (
 );
 
 const HomeScreen = (props: any) => {
-  showLog(props.data);
   const [show, setShow] = useState(false);
   const ref = useRef(null);
   const [reload, setReload] = useState(true);
@@ -79,38 +77,38 @@ const HomeScreen = (props: any) => {
         </View>
         <SizedBox height={moderateScale(10)} />
         {/* this is the today task  */}
+        <TouchableOpacity
+          style={styles.TodayTask}
+          activeOpacity={0.8}
+          onPress={() => {
+            ref.current.animateNextTransition();
+            setShow(!show);
+          }}>
+          <View style={styles.rowView}>
+            <Text style={styles.TitleText}>Your Task Today </Text>
+            {show ? (
+              <IconAssets.CloseWhite
+                width={moderateScale(25)}
+                height={moderateScale(25)}
+              />
+            ) : (
+              <IconAssets.MenuWhite
+                width={moderateScale(25)}
+                height={moderateScale(25)}
+              />
+            )}
+          </View>
+        </TouchableOpacity>
         <Transitioning.View ref={ref} transition={transition}>
-          <TouchableOpacity
-            style={styles.TodayTask}
-            activeOpacity={0.8}
-            onPress={() => {
-              ref.current.animateNextTransition();
-              setShow(!show);
-            }}>
-            <View style={styles.rowView}>
-              <Text style={styles.TitleText}>Your Task Today </Text>
-              {show ? (
-                <IconAssets.CloseWhite
-                  width={moderateScale(25)}
-                  height={moderateScale(25)}
-                />
-              ) : (
-                <IconAssets.MenuWhite
-                  width={moderateScale(25)}
-                  height={moderateScale(25)}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
           {show && (
             <View
               style={{
+                padding: moderateScale(10),
                 height:
                   props.data.length > 9
                     ? moderateScale(DEVICE.DEVICE_Height / 2.4)
                     : moderateScale(DEVICE.DEVICE_Height / 2.4),
               }}>
-              <SizedBox height={moderateScale(10)} />
               <FlatList
                 showsVerticalScrollIndicator={false}
                 data={props.data}

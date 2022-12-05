@@ -1,5 +1,5 @@
 import {returnToDispatch} from '../../Utils/apiHelper';
-import {getTodo, showLog} from '../../Utils/AsyncHelper';
+import {getTodo} from '../../Utils/AsyncHelper';
 import {TODO_FAILURE, TODO_REQUEST, TODO_SUCCESS} from './actionTypes';
 
 export const fetchToDo = (payload = '') => {
@@ -10,7 +10,6 @@ export const fetchToDo = (payload = '') => {
       if (todo.length >= 0) {
         returnToDispatch(dispatch, TODO_SUCCESS, JSON.parse(todo));
       } else {
-        showLog(todo);
         returnToDispatch(dispatch, TODO_FAILURE);
       }
     });

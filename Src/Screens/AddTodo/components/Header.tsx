@@ -9,7 +9,6 @@ import {
 import React from 'react';
 
 import {moderateScale} from 'react-native-size-matters';
-import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import COLORS from '../../../Constants/colors';
 import IconAssets from '../../../Assets/Icons';
 import SizedBox from '../../../Components/SizedBox';
@@ -60,7 +59,8 @@ export default function Header({
           <SizedBox height={moderateScale(10)} />
           <Text style={styles.title}>Task Description</Text>
           <SizedBox height={moderateScale(10)} />
-          <AutoGrowingTextInput
+          <TextInput
+            multiline
             onChangeText={value => setDescription(value)}
             value={description}
             style={styles.input}
