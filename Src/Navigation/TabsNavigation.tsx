@@ -10,6 +10,7 @@ import {moderateScale} from 'react-native-size-matters';
 import TodoList from '../Screens/TodoList/TodoList';
 import AddTodo from '../Screens/AddTodo/AddTodo';
 import Setting from '../Screens/Setting/Setting';
+import FONTS from '../Constants/fonts';
 const tabs = createBottomTabNavigator();
 
 export default function TabsNavigation() {
@@ -17,9 +18,11 @@ export default function TabsNavigation() {
     <tabs.Navigator
       initialRouteName={SCREEN_CONSTANT.home}
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShown: true,
         headerTitleStyle: {
           color: COLORS.white,
+          fontFamily: FONTS.REGULAR,
         },
         headerStyle: {
           borderBottomRightRadius: moderateScale(2),
