@@ -5,9 +5,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native';
 import React from 'react';
-
 import {moderateScale} from 'react-native-size-matters';
 import COLORS from '../../../Constants/colors';
 import IconAssets from '../../../Assets/Icons';
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   input: {
+    paddingVertical: Platform.OS === 'ios' ? moderateScale(10) : 0,
     fontFamily: FONTS.REGULAR,
     color: COLORS.commonText,
     paddingHorizontal: moderateScale(10),

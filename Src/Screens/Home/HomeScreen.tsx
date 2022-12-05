@@ -24,7 +24,6 @@ const HomeScreen = (props: any) => {
   const [show, setShow] = useState(false);
   const ref = useRef(null);
   const [reload, setReload] = useState(true);
-
   useEffect(() => {
     props.fetchToDo();
   }, []);
