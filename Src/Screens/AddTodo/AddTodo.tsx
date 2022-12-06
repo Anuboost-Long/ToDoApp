@@ -8,8 +8,10 @@ import FONTS_SIZE from '../../Constants/fontSize';
 import Header from './components/Header';
 import uuid from 'react-native-uuid';
 import TodoCards from './components/TodoCards';
-import {getTodo, saveTodo} from '../../Utils/AsyncHelper';
-
+import {saveTodo} from '../../Utils/AsyncHelper';
+import {connect} from 'react-redux';
+import {fetchToDo} from '../../Redux/todos/actions';
+import LoadingModal from '../../Components/loadingModal';
 export interface todo {
   name: string;
   description: string;
@@ -17,18 +19,14 @@ export interface todo {
   selected: boolean;
 }
 
-interface todoHolder {
-  item: todo;
-}
-
-export default function AddTodo() {
+const AddTodo = (props: any) => {
+  const {data, loading} = props;
   const [oldTodo, setOldTodo] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [tasks, setTask]: todo = useState([]);
+  const [tasks, setTask] = useState([]);
 
-  React.useEffect(async () => {
-    const todo = await getTodo();
-    setOldTodo(JSON.parse(todo));
+  React.useEffect(() => {
+    props.fetchToDo();
   }, []);
 
   const handleAddTodos = (name: string, description: string) => {
@@ -108,6 +106,7 @@ export default function AddTodo() {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+        <LoadingModal visible={loading} />
         <FlatList
           ListFooterComponent={renderButtons}
           ItemSeparatorComponent={() => <SizedBox height={moderateScale(20)} />}
@@ -127,7 +126,21 @@ export default function AddTodo() {
       </View>
     </View>
   );
-}
+};
+
+const mapDispatchtoProps = {
+  fetchToDo,
+};
+
+const mapStateToProps = (state: any) => {
+  const {loading, data} = state.TODO;
+  return {
+    loading,
+    data,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchtoProps)(AddTodo);
 
 const styles = StyleSheet.create({
   container: {

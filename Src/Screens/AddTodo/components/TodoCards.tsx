@@ -19,7 +19,7 @@ interface TodoCardsProp {
   index: number;
   item: todo;
   handleRemoveaTask: (event: GestureResponderEvent) => void;
-  handleSelectaTask: (event: GestureResponderEvent) => void;
+  handleSelectaTask: (index: any, select: any) => void;
 }
 
 export default function TodoCards({

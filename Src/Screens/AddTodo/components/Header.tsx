@@ -18,8 +18,8 @@ import FONTS_SIZE from '../../../Constants/fontSize';
 import {useState} from 'react';
 
 interface headerprops {
-  handleAddTask: (event: GestureResponderEvent) => string;
-  handleClearTask: (event: GestureResponderEvent) => void;
+  handleAddTask: (name: string, description: string) => void;
+  handleClearTask: (name: string) => void;
   selectAll: boolean;
   setSelectAll: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -32,6 +32,18 @@ export default function Header({
 }: headerprops) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const clearTask = () => {
+    setName('');
+    setDescription('');
+    handleClearTask(name);
+  };
+
+  const addTask = () => {
+    handleAddTask(name, description);
+    setName('');
+    setDescription('');
+  };
 
   return (
     <>
@@ -69,23 +81,13 @@ export default function Header({
           />
           <SizedBox height={moderateScale(10)} />
           <View style={styles.ButtonContainer}>
-            <TouchableOpacity
-              style={styles.giveup}
-              onPress={() => {
-                setName('');
-                setDescription('');
-                handleClearTask(name);
-              }}>
+            <TouchableOpacity style={styles.giveup} onPress={clearTask}>
               <Text style={styles.headerText}>Clear</Text>
             </TouchableOpacity>
             <TouchableOpacity
               disabled={name.length >= 5 ? false : true}
               style={styles.complete}
-              onPress={() => {
-                handleAddTask(name, description);
-                setName('');
-                setDescription('');
-              }}>
+              onPress={addTask}>
               <Text style={styles.headerText}>Add Task</Text>
             </TouchableOpacity>
           </View>
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   input: {
-    paddingVertical: Platform.OS === 'ios' ? moderateScale(10) : 0,
+    paddingVertical: moderateScale(10),
     fontFamily: FONTS.REGULAR,
     color: COLORS.commonText,
     paddingHorizontal: moderateScale(10),

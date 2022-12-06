@@ -102,10 +102,10 @@ const HomeScreen = (props: any) => {
           {show && (
             <View
               style={{
-                paddingTop: moderateScale(10),
+                paddingVertical: moderateScale(10),
                 height:
                   props.data.length > 9
-                    ? moderateScale(DEVICE.DEVICE_Height / 1.9)
+                    ? moderateScale(DEVICE.DEVICE_Height / 2.4)
                     : moderateScale(DEVICE.DEVICE_Height / 2.4),
               }}>
               <FlatList
