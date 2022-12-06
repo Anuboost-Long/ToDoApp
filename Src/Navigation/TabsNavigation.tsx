@@ -40,7 +40,7 @@ export default function TabsNavigation() {
         },
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: Platform.OS === 'ios' ? 75 : 60,
+          height: Platform.OS === 'ios' ? moderateScale(80) : moderateScale(60),
           backgroundColor: '#FFFFFF',
         },
       }}>
