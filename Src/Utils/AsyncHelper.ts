@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
+import messaging from '@react-native-firebase/messaging'
 
 export const APP_NAME = 'MBus User';
 
@@ -15,6 +16,23 @@ export const getTodo = async () => {
   }
   return '';
 };
+
+export const getFCMToken = async () => {
+  const fcmToken = await AsyncStorage.getItem('FCM_Token');
+  showLog(fcmToken,'This is the stored token')
+  if(!fcmToken){
+   try {
+    const fcmToken = await messaging().getToken();
+    if(fcmToken){
+      console.log('This is the new token', fcmToken)
+      AsyncStorage.setItem('FCM_Token',fcmToken)
+    }
+   } catch(err){
+      console.error(err,"This is the error")
+   }
+  }
+
+}
 
 export const showLog = (data: any, ...optionalParams: any[]) => {
   if (__DEV__) {
